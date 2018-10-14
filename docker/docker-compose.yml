@@ -13,7 +13,7 @@ services:
       - ./db:/var/lib/postgresql/data
     ports:
       - "5432:5432" 
-  app_servus_localflirt:
+  servus_protobuf:
     build: .
     volumes:
     - ./../:/app
