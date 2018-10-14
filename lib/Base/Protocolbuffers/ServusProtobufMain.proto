@@ -1,0 +1,116 @@
+syntax = "proto3";
+option csharp_namespace = "ServusProtobuf";
+message ServusMessage {
+    Modulename modul = 1;
+    oneof functionID {
+       BasicFunctions basicfunc = 100;
+       AuthFunctions authfunc = 101;
+       QueueFunctions queuefunc =102;
+       ConnectFourFunctions cffunc = 103;
+       TestGameFunctions testGamefunc= 104;
+    }
+    sint64 callBackID = 3;
+    string gameID =4;
+    bool error = 5;
+    string errorMessage = 6;
+    ErrorType errorType = 7;
+    oneof value {
+        bytes value_Bytes = 201;
+        string value_String =202;
+        int64 value_Int = 203;
+        bool value_Bool = 204;
+        ServusLogin_Self value_SelfAuth = 205;
+        ServusLogin_Only value_OnlyAuth = 206;
+        ServusLogin_FB   value_FBAuth   = 207;
+        ServusLogin_FB_Response value_FBAuthResp = 208;
+        Userdata_GetPicture value_UDataPicture = 209;
+    }
+}
+message Userdata_GetPicture {
+    string id = 1;
+    USERDATA_REASONS reason = 2;
+    bytes value_Bytes = 3;
+}
+message ServusLogin_Self{
+    string nickname = 1;
+    string email = 2;
+    string password = 3;
+}
+message ServusLogin_FB{
+    string fb_id = 1;
+    string token = 2;
+}
+message ServusLogin_FB_Response{
+    bool loginSucessful = 1;
+    FB_REASONS reason = 2;
+}
+message ServusLogin_Only{
+    int64 id = 1;
+    int64 key = 2;
+}
+enum FB_REASONS {
+    FB_REASONS_UNKOWN = 0;
+    FB_REASONS_ID_NOT_MATCHED_TO_TOKEN = 1;
+    FB_REASONS_ID_NOT_FOUND = 2;
+}
+enum USERDATA_REASONS {
+    USERDATA_REASONS_UNKOWN = 0;
+    USERDATA_REASONS_NO_PIC = 1;
+}
+enum ErrorType {
+        ERROR_UNKOWN = 0;
+        ERROR_GENERIC = 1;
+        ERROR_DB = 2;
+        ERROR_WRONGMETHOD = 3;
+        ERROR_NO_AUTH = 4;
+        ERROR_NO_GAME_FOUND = 5;
+        ERROR_NO_GAME_QUEUE_FOUND = 6;
+        ERROR_NO_FB_PICTURE = 7;
+        ERROR_NOT_FOUND = 8;
+        ERROR_NO_MAPPING_FOUND = 9;
+    }
+enum AuthFunctions {
+        AUTH_UNKOWN = 0;
+        AUTH_REGISTER = 1;
+        AUTH_LOGIN = 2;
+        AUTH_PICTURE= 3;
+    }
+enum BasicFunctions {
+        BASIC_UNKOWN = 0;
+        BASIC_BEGIN = 1;
+        BASIC_ECHO = 2;
+    }
+enum QueueFunctions {
+    QUEUE_UNKOWN = 0;
+    QUEUE_JOIN = 1;
+    QUEUE_LEAVE = 2;
+    QUEUE_GAMEID= 3;
+}
+enum ConnectFourFunctions {
+    CF_UNKOWN = 0;
+    START_CF = 1;
+    TURN_CF = 2;
+    ABORT_CF = 3;
+    SET_CF = 4;
+    WIN_CF = 5;
+    LOOSE_CF = 6;
+    RESET_CF = 7; 
+}
+enum TestGameFunctions {
+    TG_UNKOWN = 0;
+    TG_BEGIN = 1;
+    TG_ECHO = 2;
+}
+enum Modulename {
+        UNKNOWN = 0;
+        DIRECT = 1;
+        SERVERSETTINGS = 2;
+        QUEUE = 3;
+        DIRECTGAME =4;
+        GENERICGAME = 5;
+        AUTH_FB = 6;
+        AUTH_SELF = 7;
+        AUTH_ONLY = 8;
+        AUTH_USERDATA = 9;
+        TEST_ECHO = 10;
+    }

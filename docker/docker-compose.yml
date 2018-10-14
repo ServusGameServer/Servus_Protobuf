@@ -1,0 +1,21 @@
+version: "3.3"
+services:
+  app_db:
+    image: postgres
+    environment:
+      - 'POSTGRES_USER=db'
+      - 'POSTGRES_PASSWORD=jUWDyRTtLCsHvwXq'
+      - 'POSTGRES_DB=app'
+      - 'POSTGRES_ENCODING=UNICODE'
+      - 'POSTGRES_COLLATE=C'
+      - 'POSTGRES_COLLATE_TYPE=C'
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432" 
+  app_servus_localflirt:
+    build: .
+    volumes:
+    - ./../:/app
+    ports:
+    - "4000:3334"
